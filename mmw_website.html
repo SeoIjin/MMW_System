@@ -75,6 +75,164 @@
   .badge.mode-multiple  { background: rgba(240,168,51,0.12); color: var(--accent2); }
   .badge.mode-truefalse { background: rgba(120,180,255,0.12); color: #78b4ff; }
 
+  /* ── START LEARNING BUTTON ── */
+  .start-learning-btn {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-family: 'DM Mono', monospace; font-size: 0.72rem; font-weight: 500;
+    letter-spacing: 0.05em; cursor: pointer; border: none;
+    padding: 8px 16px; border-radius: 10px;
+    background: linear-gradient(135deg, rgba(200,240,102,0.18), rgba(200,240,102,0.08));
+    border: 1px solid rgba(200,240,102,0.3);
+    color: var(--accent);
+    transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
+    white-space: nowrap;
+  }
+  .start-learning-btn:hover {
+    background: linear-gradient(135deg, rgba(200,240,102,0.28), rgba(200,240,102,0.12));
+    box-shadow: 0 4px 18px rgba(200,240,102,0.18);
+    transform: translateY(-1px);
+  }
+  .start-learning-btn:active { transform: scale(0.97) translateY(0); }
+  .start-learning-btn .sl-icon { font-size: 1rem; }
+
+  /* ── ANSWER KEY OVERLAY ── */
+  .ak-overlay {
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(10, 10, 8, 0.88);
+    backdrop-filter: blur(8px);
+    display: flex; align-items: flex-start; justify-content: center;
+    padding: 40px 20px;
+    overflow-y: auto;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  .ak-overlay.visible { opacity: 1; pointer-events: all; }
+
+  .ak-panel {
+    width: 100%; max-width: 780px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    overflow: hidden;
+    transform: translateY(24px) scale(0.98);
+    transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s ease;
+    opacity: 0;
+  }
+  .ak-overlay.visible .ak-panel { transform: translateY(0) scale(1); opacity: 1; }
+
+  .ak-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 24px 30px;
+    border-bottom: 1px solid var(--border);
+    position: sticky; top: 0;
+    background: var(--surface);
+    z-index: 5;
+  }
+  .ak-header-left { display: flex; align-items: center; gap: 14px; }
+  .ak-icon { font-size: 1.6rem; }
+  .ak-title { font-family: 'Fraunces', serif; font-size: 1.4rem; font-weight: 700; letter-spacing: -0.02em; }
+  .ak-count {
+    font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--muted); margin-top: 2px;
+  }
+  .ak-close {
+    background: var(--border); border: none; color: var(--muted);
+    width: 34px; height: 34px; border-radius: 50%; font-size: 1rem;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s, color 0.2s;
+    flex-shrink: 0;
+  }
+  .ak-close:hover { background: #3a3936; color: var(--text); }
+
+  /* Mode tabs inside answer key */
+  .ak-tabs {
+    display: flex; gap: 6px;
+    padding: 16px 30px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg);
+    overflow-x: auto;
+  }
+  .ak-tab {
+    font-family: 'DM Mono', monospace; font-size: 0.66rem; letter-spacing: 0.08em;
+    padding: 6px 14px; border-radius: 8px; border: 1px solid var(--border);
+    background: transparent; color: var(--muted); cursor: pointer;
+    white-space: nowrap; transition: all 0.2s;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .ak-tab.active-fc  { background: rgba(200,240,102,0.1); border-color: rgba(200,240,102,0.35); color: var(--accent); }
+  .ak-tab.active-mc  { background: rgba(240,168,51,0.1);  border-color: rgba(240,168,51,0.35);  color: var(--accent2); }
+  .ak-tab.active-tf  { background: rgba(120,180,255,0.1); border-color: rgba(120,180,255,0.35); color: #78b4ff; }
+  .ak-tab:not(.active-fc):not(.active-mc):not(.active-tf):hover { color: var(--text); border-color: var(--muted); }
+
+  .ak-body { padding: 24px 30px; display: flex; flex-direction: column; gap: 14px; }
+
+  /* Individual answer key card */
+  .ak-card {
+    background: var(--card-front);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    animation: akSlide 0.25s ease both;
+  }
+  @keyframes akSlide { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+  .ak-card-header {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 16px 20px 14px;
+  }
+  .ak-num {
+    font-size: 0.62rem; font-weight: 500;
+    min-width: 26px; height: 26px;
+    background: var(--border); border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 1px;
+    color: var(--muted); letter-spacing: 0.06em;
+  }
+  .ak-num.fc { background: rgba(200,240,102,0.12); color: var(--accent); }
+  .ak-num.mc { background: rgba(240,168,51,0.12); color: var(--accent2); }
+  .ak-num.tf { background: rgba(120,180,255,0.12); color: #78b4ff; }
+
+  .ak-card-content { flex: 1; }
+  .ak-question { font-family: 'Fraunces', serif; font-size: 0.98rem; font-style: italic; font-weight: 300; color: var(--text); line-height: 1.5; }
+  .ak-answer-strip {
+    border-top: 1px solid var(--border);
+    padding: 12px 20px 14px 60px;
+    display: flex; align-items: flex-start; gap: 10px;
+  }
+  .ak-answer-label {
+    font-size: 0.58rem; text-transform: uppercase; letter-spacing: 0.16em;
+    color: var(--muted); white-space: nowrap; margin-top: 3px; flex-shrink: 0;
+  }
+  .ak-answer-text { font-size: 0.78rem; color: var(--accent); line-height: 1.55; }
+  .ak-answer-text.mc { color: var(--accent2); }
+  .ak-answer-text.tf-true  { color: #78b4ff; }
+  .ak-answer-text.tf-false { color: #e05252; }
+
+  /* MC options list inside answer key */
+  .ak-opts { display: flex; flex-direction: column; gap: 5px; margin-top: 10px; }
+  .ak-opt {
+    display: flex; align-items: flex-start; gap: 8px;
+    font-size: 0.73rem; color: var(--muted); line-height: 1.45;
+    padding: 5px 8px; border-radius: 7px;
+  }
+  .ak-opt.is-correct { background: rgba(200,240,102,0.06); color: var(--accent); }
+  .ak-opt-letter {
+    font-size: 0.58rem; background: var(--border); border-radius: 4px;
+    padding: 2px 5px; letter-spacing: 0.08em; flex-shrink: 0; margin-top: 2px;
+    color: var(--muted);
+  }
+  .ak-opt.is-correct .ak-opt-letter { background: rgba(200,240,102,0.2); color: var(--accent); }
+  .ak-correct-mark { font-size: 0.7rem; margin-left: auto; flex-shrink: 0; margin-top: 2px; }
+
+  /* image in ak */
+  .ak-img { width: 100%; max-height: 180px; object-fit: contain; border-radius: 8px; border: 1px solid var(--border); margin-top: 10px; }
+
+  /* empty in ak */
+  .ak-empty {
+    text-align: center; padding: 48px 20px;
+    font-size: 0.75rem; color: var(--muted);
+    font-family: 'Fraunces', serif; font-style: italic;
+  }
+
   /* ── MODE SWITCHER ── */
   .mode-switcher {
     display: flex; align-items: center; gap: 4px;
@@ -86,6 +244,12 @@
     color: var(--muted); background: transparent; border: none;
     padding: 6px 13px; border-radius: 7px; cursor: pointer;
     letter-spacing: 0.05em; transition: background 0.2s, color 0.2s; white-space: nowrap;
+    display: inline-flex; align-items: center; gap: 5px;
+  }
+  .mode-btn .btn-emoji {
+    font-size: 0.85rem; line-height: 1;
+    font-family: "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;
+    font-style: normal; letter-spacing: 0;
   }
   .mode-btn.active { background: var(--border); color: var(--text); }
   .mode-btn:hover:not(.active) { color: var(--text); }
@@ -107,7 +271,6 @@
 
   .sidebar-inner { padding: 28px 24px; display: flex; flex-direction: column; gap: 22px; flex: 1; }
 
-  /* sidebar panel accent strips */
   .sidebar-strip {
     height: 3px; width: 100%; flex-shrink: 0;
     background: linear-gradient(90deg, var(--accent), transparent);
@@ -115,7 +278,6 @@
   .sidebar-strip.multiple { background: linear-gradient(90deg, var(--accent2), transparent); }
   .sidebar-strip.truefalse { background: linear-gradient(90deg, #78b4ff, transparent); }
 
-  /* Panel header label */
   .panel-header {
     display: flex; align-items: center; gap: 10px; padding-bottom: 14px;
     border-bottom: 1px solid var(--border);
@@ -153,7 +315,6 @@
   .btn-danger { background: transparent; color: #e05252; border: 1px solid #3a2020; padding: 7px 12px; font-size: 0.7rem; }
   .btn-danger:hover { background: #3a2020; }
 
-  /* Card list */
   .card-list { display: flex; flex-direction: column; gap: 8px; }
   .card-item {
     background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
@@ -162,9 +323,7 @@
     cursor: pointer; transition: border-color 0.2s, background 0.2s;
   }
   .card-item:hover { border-color: var(--muted); background: var(--card-front); }
-  .card-item.active-card {
-    border-color: rgba(200,240,102,0.5); background: rgba(200,240,102,0.05);
-  }
+  .card-item.active-card { border-color: rgba(200,240,102,0.5); background: rgba(200,240,102,0.05); }
   .card-item.active-card.mc-active { border-color: rgba(240,168,51,0.5); background: rgba(240,168,51,0.05); }
   .card-item.active-card.tf-active  { border-color: rgba(120,180,255,0.5); background: rgba(120,180,255,0.05); }
   @keyframes slideIn { from { opacity:0; transform:translateY(-6px); } to { opacity:1; transform:translateY(0); } }
@@ -175,65 +334,29 @@
   .delete-btn { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 0.85rem; padding: 2px 4px; transition: color 0.15s; line-height: 1; }
   .delete-btn:hover { color: #e05252; }
 
-  /* controls row */
   .controls-row { display: flex; gap: 8px; padding: 16px 24px; border-top: 1px solid var(--border); flex-shrink: 0; }
 
-  /* ── MC SIDEBAR ── */
-  .mc-option-row {
-    display: flex; align-items: flex-start; gap: 8px; margin-bottom: 9px;
-  }
-  .mc-option-letter {
-    font-size: 0.6rem; color: var(--muted); background: var(--border);
-    border-radius: 5px; padding: 4px 7px; letter-spacing: 0.08em; flex-shrink: 0; margin-top: 10px;
-  }
-  .mc-option-row input { margin-bottom: 0; }
-  .correct-toggle {
-    display: flex; align-items: center; gap: 6px; margin-top: 4px;
-    font-size: 0.64rem; color: var(--muted); cursor: pointer; user-select: none;
-  }
+  .mc-option-row { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 9px; }
+  .mc-option-letter { font-size: 0.6rem; color: var(--muted); background: var(--border); border-radius: 5px; padding: 4px 7px; letter-spacing: 0.08em; flex-shrink: 0; margin-top: 10px; }
+  .correct-toggle { display: flex; align-items: center; gap: 6px; margin-top: 4px; font-size: 0.64rem; color: var(--muted); cursor: pointer; user-select: none; }
   .correct-toggle input[type="radio"] { accent-color: var(--accent); }
-
   .mc-options-group { display: flex; flex-direction: column; gap: 4px; }
-  .mc-opt-block {
-    background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
-    padding: 10px 12px; transition: border-color 0.2s;
-  }
+  .mc-opt-block { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; transition: border-color 0.2s; }
   .mc-opt-block.is-correct { border-color: rgba(200,240,102,0.35); background: rgba(200,240,102,0.04); }
   .mc-opt-block-header { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
   .mc-opt-block input[type="text"] { font-size: 0.76rem; padding: 8px 11px; }
 
-  /* ── TF SIDEBAR ── */
-  .tf-card-preview {
-    background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
-    padding: 14px 16px;
-  }
+  .tf-card-preview { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; }
   .tf-card-q { font-size: 0.7rem; color: var(--muted); margin-bottom: 5px; }
   .tf-card-a { font-size: 0.8rem; color: var(--text); }
-
-  .tf-setting {
-    background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
-    padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px;
-  }
+  .tf-setting { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
   .tf-setting-label { font-size: 0.7rem; color: var(--muted); line-height: 1.5; }
-  .toggle {
-    width: 38px; height: 20px; background: var(--border); border-radius: 99px;
-    position: relative; cursor: pointer; flex-shrink: 0; transition: background 0.25s;
-    border: none; outline: none;
-  }
+  .toggle { width: 38px; height: 20px; background: var(--border); border-radius: 99px; position: relative; cursor: pointer; flex-shrink: 0; transition: background 0.25s; border: none; outline: none; }
   .toggle.on { background: var(--accent); }
-  .toggle::after {
-    content: ''; position: absolute; top: 2px; left: 2px;
-    width: 16px; height: 16px; border-radius: 50%;
-    background: var(--muted); transition: transform 0.25s, background 0.25s;
-  }
+  .toggle::after { content: ''; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%; background: var(--muted); transition: transform 0.25s, background 0.25s; }
   .toggle.on::after { transform: translateX(18px); background: #0f0e0c; }
-
   .tf-ratio-row { display: flex; gap: 8px; }
-  .tf-ratio-btn {
-    flex: 1; padding: 9px 10px; font-family: 'DM Mono', monospace; font-size: 0.68rem;
-    border: 1px solid var(--border); border-radius: 8px; background: var(--surface);
-    color: var(--muted); cursor: pointer; text-align: center; transition: all 0.2s;
-  }
+  .tf-ratio-btn { flex: 1; padding: 9px 10px; font-family: 'DM Mono', monospace; font-size: 0.68rem; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); color: var(--muted); cursor: pointer; text-align: center; transition: all 0.2s; }
   .tf-ratio-btn.active { border-color: #78b4ff; color: #78b4ff; background: rgba(120,180,255,0.07); }
 
   /* ── STUDY AREA ── */
@@ -242,16 +365,10 @@
   @keyframes fadeUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
   .topic-display h2 { font-family: 'Fraunces', serif; font-size: 2.2rem; font-weight: 700; letter-spacing: -0.03em; color: var(--text); line-height: 1.1; }
   .topic-display p { font-size: 0.7rem; color: var(--muted); margin-top: 8px; letter-spacing: 0.06em; }
-  .topic-tag {
-    display: inline-block; padding: 4px 12px; border-radius: 99px;
-    font-size: 0.68rem; margin-bottom: 10px; letter-spacing: 0.1em; text-transform: uppercase;
-    background: rgba(200,240,102,0.1); color: var(--accent); border: 1px solid rgba(200,240,102,0.25);
-    transition: background 0.3s, color 0.3s, border-color 0.3s;
-  }
+  .topic-tag { display: inline-block; padding: 4px 12px; border-radius: 99px; font-size: 0.68rem; margin-bottom: 10px; letter-spacing: 0.1em; text-transform: uppercase; background: rgba(200,240,102,0.1); color: var(--accent); border: 1px solid rgba(200,240,102,0.25); transition: background 0.3s, color 0.3s, border-color 0.3s; }
   .topic-tag.multiple { background: rgba(240,168,51,0.1); color: var(--accent2); border-color: rgba(240,168,51,0.25); }
   .topic-tag.truefalse { background: rgba(120,180,255,0.1); color: #78b4ff; border-color: rgba(120,180,255,0.25); }
 
-  /* Progress */
   .progress-row { width: 100%; max-width: 600px; display: flex; align-items: center; gap: 14px; }
   .progress-bar { flex: 1; height: 4px; background: var(--border); border-radius: 99px; overflow: hidden; }
   .progress-fill { height: 100%; background: var(--accent); border-radius: 99px; transition: width 0.4s ease; }
@@ -259,23 +376,16 @@
   .progress-fill.truefalse { background: #78b4ff; }
   .progress-label { font-size: 0.66rem; color: var(--muted); white-space: nowrap; }
 
-  /* Score */
   .score-badge { display: flex; align-items: center; gap: 20px; font-size: 0.68rem; color: var(--muted); }
   .score-badge span { display: flex; align-items: center; gap: 6px; }
   .dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
   .dot-correct { background: var(--accent); }
   .dot-wrong { background: #e05252; }
 
-  /* ── FLASHCARD ── */
   .flashcard-wrapper { perspective: 1200px; width: 100%; max-width: 580px; height: 300px; cursor: pointer; }
   .flashcard { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.55s cubic-bezier(0.4,0,0.2,1); }
   .flashcard.flipped { transform: rotateY(180deg); }
-  .card-face {
-    position: absolute; inset: 0; border-radius: 20px;
-    backface-visibility: hidden; -webkit-backface-visibility: hidden;
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    padding: 32px 40px; gap: 12px; text-align: center;
-  }
+  .card-face { position: absolute; inset: 0; border-radius: 20px; backface-visibility: hidden; -webkit-backface-visibility: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 32px 40px; gap: 12px; text-align: center; }
   .card-front { background: var(--card-front); border: 1px solid var(--border); box-shadow: 0 20px 60px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04); }
   .card-back { background: var(--card-back); border: 1px solid rgba(200,240,102,0.15); box-shadow: 0 20px 60px rgba(0,0,0,0.4), inset 0 1px 0 rgba(200,240,102,0.06); transform: rotateY(180deg); }
   .card-eyebrow { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.18em; color: var(--muted); }
@@ -286,50 +396,26 @@
   .flip-icon { font-size: 0.85rem; animation: spin 3s linear infinite; }
   @keyframes spin { 0%,80% { transform:rotate(0); } 100% { transform:rotate(360deg); } }
 
-  /* ── MULTIPLE CHOICE ── */
   .mc-wrapper { width: 100%; max-width: 580px; display: flex; flex-direction: column; gap: 14px; }
-  .mc-question {
-    background: var(--card-front); border: 1px solid var(--border); border-radius: 20px;
-    padding: 28px 34px; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-    border-top: 2px solid rgba(240,168,51,0.3);
-  }
+  .mc-question { background: var(--card-front); border: 1px solid var(--border); border-radius: 20px; padding: 28px 34px; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.3); border-top: 2px solid rgba(240,168,51,0.3); }
   .mc-q-label { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.18em; color: var(--accent2); margin-bottom: 12px; }
   .mc-q-text { font-family: 'Fraunces', serif; font-size: 1.3rem; font-weight: 300; font-style: italic; line-height: 1.5; color: var(--text); }
   .mc-options-display { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .mc-option {
-    background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
-    padding: 14px 16px; font-family: 'DM Mono', monospace; font-size: 0.73rem; color: var(--text);
-    cursor: pointer; text-align: left; display: flex; align-items: flex-start; gap: 10px;
-    transition: border-color 0.2s, background 0.2s; line-height: 1.5;
-  }
+  .mc-option { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; font-family: 'DM Mono', monospace; font-size: 0.73rem; color: var(--text); cursor: pointer; text-align: left; display: flex; align-items: flex-start; gap: 10px; transition: border-color 0.2s, background 0.2s; line-height: 1.5; }
   .mc-option:hover:not([disabled]) { border-color: var(--accent2); background: rgba(240,168,51,0.05); }
-  .opt-letter {
-    font-size: 0.6rem; color: var(--muted); background: var(--border);
-    border-radius: 5px; padding: 2px 6px; letter-spacing: 0.08em; flex-shrink: 0; margin-top: 1px;
-  }
+  .opt-letter { font-size: 0.6rem; color: var(--muted); background: var(--border); border-radius: 5px; padding: 2px 6px; letter-spacing: 0.08em; flex-shrink: 0; margin-top: 1px; }
   .mc-option.correct { background: var(--correct); border-color: var(--correct-border); }
   .mc-option.correct .opt-letter { background: rgba(200,240,102,0.2); color: var(--accent); }
   .mc-option.wrong { background: var(--wrong); border-color: var(--wrong-border); }
   .mc-option.wrong .opt-letter { background: rgba(224,82,82,0.2); color: #e05252; }
   .mc-option.dim { opacity: 0.38; }
 
-  /* ── TRUE/FALSE ── */
   .tf-wrapper { width: 100%; max-width: 580px; display: flex; flex-direction: column; gap: 14px; }
-  .tf-question {
-    background: var(--card-front); border: 1px solid var(--border); border-radius: 20px;
-    padding: 28px 34px; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-    border-top: 2px solid rgba(120,180,255,0.3);
-  }
+  .tf-question { background: var(--card-front); border: 1px solid var(--border); border-radius: 20px; padding: 28px 34px; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.3); border-top: 2px solid rgba(120,180,255,0.3); }
   .tf-meta { font-size: 0.6rem; color: #78b4ff; text-transform: uppercase; letter-spacing: 0.16em; margin-bottom: 10px; }
   .tf-statement { font-family: 'Fraunces', serif; font-size: 1.3rem; font-weight: 300; font-style: italic; line-height: 1.5; color: var(--text); }
   .tf-options-display { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .tf-btn {
-    background: var(--surface); border: 1px solid var(--border); border-radius: 14px;
-    padding: 24px 18px; font-family: 'Fraunces', serif; font-size: 1.5rem; font-weight: 700;
-    letter-spacing: -0.02em; color: var(--text); cursor: pointer; text-align: center;
-    transition: border-color 0.2s, background 0.2s, transform 0.15s;
-    display: flex; flex-direction: column; align-items: center; gap: 6px;
-  }
+  .tf-btn { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 24px 18px; font-family: 'Fraunces', serif; font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; color: var(--text); cursor: pointer; text-align: center; transition: border-color 0.2s, background 0.2s, transform 0.15s; display: flex; flex-direction: column; align-items: center; gap: 6px; }
   .tf-btn sub { font-family: 'DM Mono', monospace; font-size: 0.62rem; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; font-weight: 400; font-style: normal; }
   .tf-btn:hover:not([disabled]) { transform: translateY(-2px); }
   .tf-btn.true-btn:hover:not([disabled]) { border-color: rgba(200,240,102,0.4); background: rgba(200,240,102,0.05); }
@@ -338,36 +424,26 @@
   .tf-btn.wrong { background: var(--wrong); border-color: var(--wrong-border); }
   .tf-btn.dim { opacity: 0.35; }
 
-  /* Feedback */
   .feedback { padding: 11px 16px; border-radius: 10px; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.04em; text-align: center; animation: fadeUp 0.25s ease; }
   .feedback.correct { background: rgba(200,240,102,0.1); border: 1px solid rgba(200,240,102,0.2); color: var(--accent); }
   .feedback.wrong { background: rgba(224,82,82,0.1); border: 1px solid rgba(224,82,82,0.2); color: #e05252; }
 
-  /* Nav */
   .nav-controls { display: flex; align-items: center; gap: 14px; }
-  .nav-btn {
-    background: var(--surface); border: 1px solid var(--border); border-radius: 50%;
-    width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;
-    font-size: 1.1rem; cursor: pointer; color: var(--text);
-    transition: background 0.2s, border-color 0.2s, transform 0.15s;
-  }
+  .nav-btn { background: var(--surface); border: 1px solid var(--border); border-radius: 50%; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; cursor: pointer; color: var(--text); transition: background 0.2s, border-color 0.2s, transform 0.15s; }
   .nav-btn:hover { background: var(--border); border-color: var(--muted); }
   .nav-btn:active { transform: scale(0.93); }
   .nav-btn:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
   .nav-counter { font-size: 0.73rem; color: var(--muted); min-width: 60px; text-align: center; }
 
-  /* Empty */
   .empty-state { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 60px 40px; text-align: center; flex: 1; }
   .empty-icon { font-size: 3rem; opacity: 0.3; animation: float 3s ease-in-out infinite; }
   @keyframes float { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-8px); } }
   .empty-state h3 { font-family: 'Fraunces', serif; font-size: 1.4rem; font-weight: 300; font-style: italic; color: var(--muted); }
   .empty-state p { font-size: 0.7rem; color: #3d3c38; max-width: 280px; line-height: 1.8; }
 
-  /* Toast */
   .toast { position: fixed; bottom: 30px; right: 30px; background: var(--accent); color: #0f0e0c; font-size: 0.73rem; font-weight: 500; padding: 11px 18px; border-radius: 10px; z-index: 1000; transform: translateY(80px); opacity: 0; transition: transform 0.3s, opacity 0.3s; pointer-events: none; }
   .toast.show { transform: translateY(0); opacity: 1; }
 
-  /* Results */
   .results-screen { display: flex; flex-direction: column; align-items: center; gap: 28px; text-align: center; padding: 20px 0; animation: fadeUp 0.5s ease; }
   .results-big { font-family: 'Fraunces', serif; font-size: 5rem; font-weight: 700; letter-spacing: -0.05em; color: var(--accent); line-height: 1; }
   .results-sub { font-family: 'Fraunces', serif; font-size: 1.5rem; font-weight: 300; font-style: italic; color: var(--muted); }
@@ -379,143 +455,78 @@
   .result-stat.w .result-stat-num { color: #e05252; }
   .results-actions { display: flex; gap: 10px; }
 
-  /* info box */
-  .info-box {
-    background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
-    padding: 12px 14px; font-size: 0.68rem; color: var(--muted); line-height: 1.7;
-  }
+  .info-box { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; font-size: 0.68rem; color: var(--muted); line-height: 1.7; }
   .info-box strong { color: var(--text); }
+
+  .img-upload-area { border: 1px dashed var(--border); border-radius: 10px; padding: 14px 16px; text-align: center; cursor: pointer; transition: border-color 0.2s, background 0.2s; position: relative; overflow: hidden; }
+  .img-upload-area:hover { border-color: var(--muted); background: var(--surface); }
+  .img-upload-area input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+  .img-upload-label { font-size: 0.66rem; color: var(--muted); pointer-events: none; display: flex; align-items: center; justify-content: center; gap: 6px; }
+  .img-upload-label span { font-size: 1rem; }
+  .img-preview-wrap { position: relative; margin-top: 8px; }
+  .img-preview { width: 100%; max-height: 140px; object-fit: cover; border-radius: 8px; border: 1px solid var(--border); display: block; }
+  .img-remove-btn { position: absolute; top: 6px; right: 6px; background: rgba(0,0,0,0.7); border: none; color: var(--text); border-radius: 50%; width: 22px; height: 22px; cursor: pointer; font-size: 0.7rem; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
+  .img-remove-btn:hover { background: #e05252; }
+  .card-img { width: 100%; max-height: 200px; object-fit: contain; border-radius: 12px; border: 1px solid var(--border); }
+  .mc-question .card-img { margin-top: 16px; border-radius: 10px; }
+  .tf-question .card-img { margin-top: 14px; border-radius: 10px; }
 
   ::-webkit-scrollbar { width: 4px; }
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
 
-  /* ══════════════════════════════════════
-     MOBILE RESPONSIVE — fully rewritten
-  ══════════════════════════════════════ */
+  /* ── MOBILE ── */
   @media (max-width: 900px) {
-
-    /* ── Header ── */
-    header {
-      padding: 12px 16px;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
+    header { padding: 12px 16px; gap: 10px; flex-wrap: wrap; }
     .header-left { gap: 10px; }
     .home-btn { font-size: 0.62rem; padding: 5px 9px; }
     .logo { font-size: 1.2rem; }
-    /* Hide mode badge on mobile — mode switcher makes it redundant */
     .badge { display: none; }
-
-    /* ── Mode switcher — full-width row below logo ── */
-    .mode-switcher {
-      order: 3;         /* push below header-left */
-      width: 100%;
-      justify-content: stretch;
-      border-radius: 8px;
-      padding: 3px;
-    }
-    .mode-btn {
-      flex: 1;
-      padding: 7px 6px;
-      font-size: 0.6rem;
-      letter-spacing: 0.02em;
-      text-align: center;
-      /* Truncate emoji label on very narrow screens */
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    /* ── Layout stacks vertically ── */
-    main {
-      grid-template-columns: 1fr;
-      grid-template-rows: auto 1fr;
-    }
-
-    /* ── Sidebar: collapsible drawer at top ── */
-    .sidebar-panel {
-      border-right: none;
-      border-bottom: 1px solid var(--border);
-      /* Fixed height so it doesn't eat the whole screen */
-      max-height: 46vh;
-      overflow-y: auto;
-      /* Smooth open */
-      animation: sideSlide 0.25s ease both;
-    }
-    @keyframes sideSlide {
-      from { opacity: 0; transform: translateY(-10px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
+    .start-learning-btn { font-size: 0.64rem; padding: 7px 11px; }
+    .start-learning-btn .sl-icon { font-size: 0.85rem; }
+    .mode-switcher { order: 3; width: 100%; justify-content: stretch; border-radius: 8px; padding: 3px; }
+    .mode-btn { flex: 1; padding: 7px 6px; font-size: 0.6rem; letter-spacing: 0.02em; text-align: center; justify-content: center; overflow: hidden; text-overflow: ellipsis; }
+    .mode-btn .btn-emoji { font-size: 0.8rem; }
+    main { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
+    .sidebar-panel { border-right: none; border-bottom: 1px solid var(--border); max-height: 46vh; overflow-y: auto; }
+    @keyframes sideSlide { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
     .sidebar-inner { padding: 18px 16px; gap: 16px; }
-
-    /* Controls row sits at bottom of sidebar */
-    .controls-row {
-      padding: 12px 16px;
-      gap: 6px;
-    }
+    .controls-row { padding: 12px 16px; gap: 6px; }
     .controls-row .btn { font-size: 0.64rem; padding: 6px 10px; }
-
-    /* ── Study area ── */
-    .study-area {
-      padding: 20px 14px;
-      gap: 18px;
-      /* Let it scroll independently */
-      overflow-y: auto;
-    }
-
-    /* Topic heading */
+    .study-area { padding: 20px 14px; gap: 18px; overflow-y: auto; }
     .topic-display h2 { font-size: 1.55rem; }
-    .topic-display p  { font-size: 0.64rem; }
-
-    /* Progress row */
+    .topic-display p { font-size: 0.64rem; }
     .progress-row { max-width: 100%; }
-
-    /* ── Flashcard ── */
-    .flashcard-wrapper {
-      height: 220px;
-      /* Allow full width */
-      max-width: 100%;
-    }
+    .flashcard-wrapper { height: 220px; max-width: 100%; }
     .card-face { padding: 22px 20px; }
     .card-content { font-size: 1.15rem; }
-
-    /* ── Multiple choice options: single column ── */
     .mc-options-display { grid-template-columns: 1fr; gap: 8px; }
     .mc-question { padding: 20px 18px; border-radius: 14px; }
     .mc-q-text { font-size: 1.1rem; }
     .mc-option { padding: 12px 14px; font-size: 0.7rem; }
-
-    /* ── True / False ── */
     .tf-question { padding: 20px 18px; border-radius: 14px; }
     .tf-statement { font-size: 1.1rem; }
     .tf-options-display { gap: 10px; }
     .tf-btn { padding: 18px 12px; font-size: 1.25rem; }
-
-    /* ── Results screen ── */
     .results-big { font-size: 3.5rem; }
     .results-sub { font-size: 1.1rem; }
     .results-breakdown { gap: 20px; }
     .results-actions { flex-direction: column; width: 100%; }
     .results-actions .btn { width: 100%; justify-content: center; }
-
-    /* ── Nav ── */
     .nav-btn { width: 40px; height: 40px; font-size: 1rem; }
-
-    /* ── Score badge ── */
     .score-badge { font-size: 0.62rem; gap: 12px; }
-
-    /* ── Empty state ── */
     .empty-state { padding: 40px 20px; }
     .empty-state h3 { font-size: 1.1rem; }
-
-    /* ── Toast ── */
     .toast { bottom: 16px; right: 16px; left: 16px; text-align: center; }
+    .ak-panel { border-radius: 18px; }
+    .ak-header { padding: 18px 20px; }
+    .ak-body { padding: 16px 18px; }
+    .ak-answer-strip { padding-left: 20px; }
+    .ak-tabs { padding: 12px 18px; }
   }
-
-  /* Extra-narrow phones (< 420px) */
   @media (max-width: 420px) {
     .mode-btn { font-size: 0.55rem; padding: 6px 4px; }
+    .mode-btn .btn-emoji { display: none; }
     .topic-display h2 { font-size: 1.3rem; }
     .flashcard-wrapper { height: 190px; }
     .card-content { font-size: 1rem; }
@@ -533,12 +544,35 @@
     <div class="logo">Tuk<span>las</span></div>
   </div>
   <div class="mode-switcher">
-    <button class="mode-btn active" data-mode="flashcard" onclick="switchMode('flashcard')">🃏 Flashcard</button>
-    <button class="mode-btn" data-mode="multiple" onclick="switchMode('multiple')">☰ Multiple Choice</button>
-    <button class="mode-btn" data-mode="truefalse" onclick="switchMode('truefalse')">◎ True / False</button>
+    <button class="mode-btn active" data-mode="flashcard" onclick="switchMode('flashcard')"><span class="btn-emoji">🃏</span> Flashcard</button>
+    <button class="mode-btn" data-mode="multiple" onclick="switchMode('multiple')"><span class="btn-emoji">📋</span> Multiple Choice</button>
+    <button class="mode-btn" data-mode="truefalse" onclick="switchMode('truefalse')"><span class="btn-emoji">✅</span> True / False</button>
   </div>
-  <div class="badge mode-flashcard" id="modeBadge">Flashcard</div>
+  <div style="display:flex;align-items:center;gap:10px;">
+    <button class="start-learning-btn" onclick="openAnswerKey()" id="startLearningBtn" title="View answer key for all cards">
+      <span class="sl-icon">📖</span> Answer Key
+    </button>
+    <div class="badge mode-flashcard" id="modeBadge">Flashcard</div>
+  </div>
 </header>
+
+<!-- ══ ANSWER KEY OVERLAY ══ -->
+<div class="ak-overlay" id="akOverlay" onclick="handleOverlayClick(event)">
+  <div class="ak-panel" id="akPanel">
+    <div class="ak-header">
+      <div class="ak-header-left">
+        <div class="ak-icon">📖</div>
+        <div>
+          <div class="ak-title">Answer Key</div>
+          <div class="ak-count" id="akCount">0 cards</div>
+        </div>
+      </div>
+      <button class="ak-close" onclick="closeAnswerKey()" aria-label="Close answer key">✕</button>
+    </div>
+    <div class="ak-tabs" id="akTabs"></div>
+    <div class="ak-body" id="akBody"></div>
+  </div>
+</div>
 
 <main>
 
@@ -553,13 +587,11 @@
           <div class="panel-desc">Build your deck. Click a card to flip it.</div>
         </div>
       </div>
-
       <div>
         <div class="section-label">01 — Topic</div>
         <label for="topicInput">What are you studying?</label>
         <input type="text" id="topicInput" placeholder="e.g. Photosynthesis, World War II…">
       </div>
-
       <div>
         <div class="section-label">02 — Add a Card</div>
         <label for="questionInput">Question</label>
@@ -568,7 +600,6 @@
         <textarea id="answerInput" placeholder="Type the answer…"></textarea>
         <button class="btn btn-primary" onclick="addCard()" style="margin-top:11px;">＋ Add Flashcard</button>
       </div>
-
       <div id="cardListSection" style="display:none;">
         <div class="section-label">03 — Your Cards</div>
         <div class="card-list" id="cardList"></div>
@@ -586,33 +617,37 @@
     <div class="sidebar-strip multiple"></div>
     <div class="sidebar-inner">
       <div class="panel-header">
-        <div class="panel-icon">☰</div>
+        <div class="panel-icon">📋</div>
         <div>
           <div class="panel-title">Multiple Choice</div>
           <div class="panel-desc">Set a question and define answer options. Mark the correct one.</div>
         </div>
       </div>
-
       <div>
         <div class="section-label">01 — Question</div>
         <input type="text" id="mcQuestionInput" placeholder="Type your question…">
+        <div style="margin-top:9px;">
+          <label>Image (optional)</label>
+          <div class="img-upload-area" id="mcImgUploadArea">
+            <input type="file" accept="image/*" id="mcImgInput" onchange="handleImgUpload('mc', this)">
+            <div class="img-upload-label"><span>🖼</span> Upload an image</div>
+          </div>
+          <div class="img-preview-wrap" id="mcImgPreviewWrap" style="display:none;">
+            <img class="img-preview" id="mcImgPreview" src="" alt="preview">
+            <button class="img-remove-btn" onclick="removeImg('mc')" title="Remove">✕</button>
+          </div>
+        </div>
       </div>
-
       <div>
         <div class="section-label">02 — Answer Options</div>
-        <div class="mc-options-group" id="mcOptionsGroup">
-          <!-- generated by JS -->
-        </div>
+        <div class="mc-options-group" id="mcOptionsGroup"></div>
         <button class="btn btn-ghost" onclick="addMcOption()" style="width:100%;margin-top:8px;font-size:0.68rem;">＋ Add Option</button>
       </div>
-
       <button class="btn btn-primary orange" onclick="addMcCard()">＋ Add to Deck</button>
-
       <div id="mcCardListSection" style="display:none;">
         <div class="section-label">03 — Your MC Cards</div>
         <div class="card-list" id="mcCardList"></div>
       </div>
-
       <div class="info-box">
         <strong>Tip:</strong> Select the radio button next to the correct answer before adding. You need at least 2 options.
       </div>
@@ -629,21 +664,30 @@
     <div class="sidebar-strip truefalse"></div>
     <div class="sidebar-inner">
       <div class="panel-header">
-        <div class="panel-icon">◎</div>
+        <div class="panel-icon">✅</div>
         <div>
           <div class="panel-title">True / False</div>
           <div class="panel-desc">Add statements and mark them true or false.</div>
         </div>
       </div>
-
       <div>
         <div class="section-label">01 — Statement</div>
         <label for="tfQuestionInput">The question / context</label>
         <input type="text" id="tfQuestionInput" placeholder="e.g. What is the capital of France?" style="margin-bottom:9px;">
         <label for="tfStatementInput">Statement to evaluate</label>
         <textarea id="tfStatementInput" placeholder="e.g. Paris is the capital of France." style="height:64px;"></textarea>
+        <div style="margin-top:9px;">
+          <label>Image (optional)</label>
+          <div class="img-upload-area" id="tfImgUploadArea">
+            <input type="file" accept="image/*" id="tfImgInput" onchange="handleImgUpload('tf', this)">
+            <div class="img-upload-label"><span>🖼</span> Upload an image</div>
+          </div>
+          <div class="img-preview-wrap" id="tfImgPreviewWrap" style="display:none;">
+            <img class="img-preview" id="tfImgPreview" src="" alt="preview">
+            <button class="img-remove-btn" onclick="removeImg('tf')" title="Remove">✕</button>
+          </div>
+        </div>
       </div>
-
       <div>
         <div class="section-label">02 — Is this statement…</div>
         <div class="tf-ratio-row">
@@ -652,14 +696,11 @@
         </div>
         <div style="font-size:0.65rem;color:var(--muted);margin-top:7px;" id="tfAnswerHint">Marked as: <strong style="color:#78b4ff;">True</strong></div>
       </div>
-
       <button class="btn btn-primary blue" onclick="addTFCard()">＋ Add to Deck</button>
-
       <div id="tfCardListSection" style="display:none;">
         <div class="section-label">03 — Your T/F Cards</div>
         <div class="card-list" id="tfCardList"></div>
       </div>
-
       <div class="info-box">
         <strong>Tip:</strong> Students see the statement and decide if it's true or false. You control what's correct.
       </div>
@@ -692,7 +733,8 @@
   let score = { correct: 0, wrong: 0 };
   let currentQuizState = null;
   let tfAnswer = true;
-
+  let mcImgData = null;
+  let tfImgData = null;
   let mcOptionCount = 0;
   const MC_LETTERS = ['A','B','C','D','E','F'];
 
@@ -701,6 +743,164 @@
   const answerInput   = document.getElementById('answerInput');
   const studyArea     = document.getElementById('studyArea');
   const emptyState    = document.getElementById('emptyState');
+
+  // ── ANSWER KEY ──
+  let akCurrentTab = 'all'; // 'all' | 'flashcard' | 'multiple' | 'truefalse'
+
+  function openAnswerKey() {
+    if (cards.length === 0) { showToast('Add some cards first!'); return; }
+    akCurrentTab = 'all';
+    renderAnswerKey();
+    const overlay = document.getElementById('akOverlay');
+    overlay.classList.add('visible');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeAnswerKey() {
+    document.getElementById('akOverlay').classList.remove('visible');
+    document.body.style.overflow = '';
+  }
+
+  function handleOverlayClick(e) {
+    if (e.target === document.getElementById('akOverlay')) closeAnswerKey();
+  }
+
+  function renderAnswerKey() {
+    const fcCards = cards.filter(c => c.type === 'flashcard');
+    const mcCards = cards.filter(c => c.type === 'multiple');
+    const tfCards = cards.filter(c => c.type === 'truefalse');
+
+    // Update count
+    document.getElementById('akCount').textContent = `${cards.length} card${cards.length !== 1 ? 's' : ''} total`;
+
+    // Build tabs
+    const tabsEl = document.getElementById('akTabs');
+    tabsEl.innerHTML = '';
+    const tabs = [
+      { key: 'all', label: `All (${cards.length})`, emoji: '📚' },
+      ...(fcCards.length ? [{ key: 'flashcard', label: `Flashcards (${fcCards.length})`, emoji: '🃏' }] : []),
+      ...(mcCards.length ? [{ key: 'multiple',  label: `Multiple Choice (${mcCards.length})`, emoji: '📋' }] : []),
+      ...(tfCards.length ? [{ key: 'truefalse', label: `True/False (${tfCards.length})`, emoji: '✅' }] : []),
+    ];
+    tabs.forEach(t => {
+      const btn = document.createElement('button');
+      btn.className = 'ak-tab';
+      btn.textContent = `${t.emoji} ${t.label}`;
+      const activeClass = t.key === 'all' ? 'active-fc' :
+                          t.key === 'flashcard' ? 'active-fc' :
+                          t.key === 'multiple'  ? 'active-mc' : 'active-tf';
+      if (t.key === akCurrentTab) btn.classList.add(activeClass);
+      btn.addEventListener('click', () => { akCurrentTab = t.key; renderAnswerKey(); });
+      tabsEl.appendChild(btn);
+    });
+
+    // Filter cards by tab
+    const filtered = akCurrentTab === 'all' ? cards : cards.filter(c => c.type === akCurrentTab);
+
+    const body = document.getElementById('akBody');
+    body.innerHTML = '';
+
+    if (filtered.length === 0) {
+      body.innerHTML = '<div class="ak-empty">No cards in this category yet.</div>';
+      return;
+    }
+
+    // Counters per type for numbering
+    const counts = { flashcard: 0, multiple: 0, truefalse: 0 };
+
+    filtered.forEach((card, localIdx) => {
+      counts[card.type]++;
+      const num = akCurrentTab === 'all' ? localIdx + 1 : counts[card.type];
+      const numClass = card.type === 'flashcard' ? 'fc' : card.type === 'multiple' ? 'mc' : 'tf';
+
+      const el = document.createElement('div');
+      el.className = 'ak-card';
+      el.style.animationDelay = `${localIdx * 0.04}s`;
+
+      if (card.type === 'flashcard') {
+        el.innerHTML = `
+          <div class="ak-card-header">
+            <div class="ak-num ${numClass}">${String(num).padStart(2,'0')}</div>
+            <div class="ak-card-content">
+              <div class="ak-question">${escHtml(card.q)}</div>
+            </div>
+          </div>
+          <div class="ak-answer-strip">
+            <div class="ak-answer-label">Answer</div>
+            <div class="ak-answer-text">${escHtml(card.a)}</div>
+          </div>`;
+
+      } else if (card.type === 'multiple') {
+        const letters = ['A','B','C','D','E','F'];
+        const optsHtml = card.opts.map((opt, i) => {
+          const isCorrect = opt === card.correctAnswer;
+          return `<div class="ak-opt${isCorrect ? ' is-correct' : ''}">
+            <span class="ak-opt-letter">${letters[i]}</span>
+            <span>${escHtml(opt)}</span>
+            ${isCorrect ? '<span class="ak-correct-mark">✓</span>' : ''}
+          </div>`;
+        }).join('');
+
+        el.innerHTML = `
+          <div class="ak-card-header">
+            <div class="ak-num ${numClass}">${String(num).padStart(2,'0')}</div>
+            <div class="ak-card-content">
+              <div class="ak-question">${escHtml(card.q)}</div>
+              ${card.img ? `<img class="ak-img" src="${card.img}" alt="question image">` : ''}
+              <div class="ak-opts">${optsHtml}</div>
+            </div>
+          </div>
+          <div class="ak-answer-strip">
+            <div class="ak-answer-label">Correct</div>
+            <div class="ak-answer-text mc">${escHtml(card.correctAnswer)}</div>
+          </div>`;
+
+      } else if (card.type === 'truefalse') {
+        const ansClass = card.isTrue ? 'tf-true' : 'tf-false';
+        const ansText  = card.isTrue ? '✓ True' : '✗ False';
+        el.innerHTML = `
+          <div class="ak-card-header">
+            <div class="ak-num ${numClass}">${String(num).padStart(2,'0')}</div>
+            <div class="ak-card-content">
+              <div style="font-size:0.62rem;color:var(--muted);margin-bottom:4px;letter-spacing:0.08em;">Q: ${escHtml(card.q)}</div>
+              <div class="ak-question">"${escHtml(card.statement)}"</div>
+              ${card.img ? `<img class="ak-img" src="${card.img}" alt="question image">` : ''}
+            </div>
+          </div>
+          <div class="ak-answer-strip">
+            <div class="ak-answer-label">Answer</div>
+            <div class="ak-answer-text ${ansClass}">${ansText}</div>
+          </div>`;
+      }
+
+      body.appendChild(el);
+    });
+  }
+
+  // Keyboard: Escape to close
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && document.getElementById('akOverlay').classList.contains('visible')) {
+      closeAnswerKey(); return;
+    }
+    if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') return;
+    if (document.getElementById('akOverlay').classList.contains('visible')) return;
+    if (e.key === 'ArrowRight' || e.key === 'd') { navigate(1); e.preventDefault(); }
+    if (e.key === 'ArrowLeft'  || e.key === 'a') { navigate(-1); e.preventDefault(); }
+    if ((e.key === ' ' || e.key === 'Enter') && mode === 'flashcard') {
+      const fc = document.querySelector('.flashcard');
+      if (fc) fc.classList.toggle('flipped');
+      e.preventDefault();
+    }
+    if (mode === 'truefalse' && !answered) {
+      if (e.key === 't' || e.key === 'T') document.querySelector('.true-btn')?.click();
+      if (e.key === 'f' || e.key === 'F') document.querySelector('.false-btn')?.click();
+    }
+    if (mode === 'multiple' && !answered) {
+      const map = {'1':0,'2':1,'3':2,'4':3,'a':0,'b':1,'c':2,'d':3};
+      const idx = map[e.key.toLowerCase()];
+      if (idx !== undefined) document.querySelectorAll('.mc-option')[idx]?.click();
+    }
+  });
 
   // ── INIT MC OPTIONS ──
   function initMcOptions() {
@@ -749,9 +949,7 @@
       b.querySelector('.mc-correct-radio').value = i;
       b.querySelector('.mc-opt-input').placeholder = `Option ${MC_LETTERS[i]}…`;
     });
-    if (wasCorrect && blocks.length > 0) {
-      blocks[0].querySelector('.mc-correct-radio').checked = true;
-    }
+    if (wasCorrect && blocks.length > 0) blocks[0].querySelector('.mc-correct-radio').checked = true;
     updateMcBlocks();
   }
 
@@ -769,6 +967,44 @@
     document.getElementById('tfAnswerHint').innerHTML = `Marked as: <strong style="color:#78b4ff;">${val ? 'True' : 'False'}</strong>`;
   }
 
+  // ── IMAGE UPLOAD ──
+  function handleImgUpload(type, input) {
+    const file = input.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+      const data = e.target.result;
+      if (type === 'mc') {
+        mcImgData = data;
+        document.getElementById('mcImgPreview').src = data;
+        document.getElementById('mcImgPreviewWrap').style.display = 'block';
+        document.getElementById('mcImgUploadArea').style.display = 'none';
+      } else {
+        tfImgData = data;
+        document.getElementById('tfImgPreview').src = data;
+        document.getElementById('tfImgPreviewWrap').style.display = 'block';
+        document.getElementById('tfImgUploadArea').style.display = 'none';
+      }
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function removeImg(type) {
+    if (type === 'mc') {
+      mcImgData = null;
+      document.getElementById('mcImgInput').value = '';
+      document.getElementById('mcImgPreview').src = '';
+      document.getElementById('mcImgPreviewWrap').style.display = 'none';
+      document.getElementById('mcImgUploadArea').style.display = 'block';
+    } else {
+      tfImgData = null;
+      document.getElementById('tfImgInput').value = '';
+      document.getElementById('tfImgPreview').src = '';
+      document.getElementById('tfImgPreviewWrap').style.display = 'none';
+      document.getElementById('tfImgUploadArea').style.display = 'block';
+    }
+  }
+
   // ── MODE SWITCH ──
   function switchMode(m) {
     mode = m;
@@ -776,19 +1012,15 @@
     score = { correct: 0, wrong: 0 };
     current = 0;
     currentQuizState = null;
-
     document.querySelectorAll('.mode-btn').forEach(b => b.classList.toggle('active', b.dataset.mode === m));
     document.querySelectorAll('.sidebar-panel').forEach(p => p.classList.remove('active'));
     document.getElementById(`panel-${m}`).classList.add('active');
-
     const labels = { flashcard: 'Flashcard', multiple: 'Multiple Choice', truefalse: 'True / False' };
     const badge = document.getElementById('modeBadge');
     badge.textContent = labels[m];
     badge.className = `badge mode-${m}`;
-
-    const emptyIcons = { flashcard:'🃏', multiple:'☰', truefalse:'◎' };
+    const emptyIcons = { flashcard:'🃏', multiple:'📋', truefalse:'✅' };
     document.querySelector('.empty-icon').textContent = emptyIcons[m];
-
     renderStudy();
   }
 
@@ -822,10 +1054,9 @@
     const filled = opts.filter(o => o);
     if (filled.length < 2) { showToast('Please fill in at least 2 options.'); return; }
     if (correctIdx === -1 || !opts[correctIdx]) { showToast('Please mark a correct answer.'); return; }
-
-    cards.push({ type: 'multiple', q, opts: opts.filter(o => o), correctAnswer: opts[correctIdx] });
-
+    cards.push({ type: 'multiple', q, opts: opts.filter(o => o), correctAnswer: opts[correctIdx], img: mcImgData });
     document.getElementById('mcQuestionInput').value = '';
+    removeImg('mc');
     initMcOptions();
     renderSidebar();
     currentQuizState = null;
@@ -838,11 +1069,10 @@
     const q = document.getElementById('tfQuestionInput').value.trim();
     const statement = document.getElementById('tfStatementInput').value.trim();
     if (!q || !statement) { showToast('Please enter both a question and a statement.'); return; }
-
-    cards.push({ type: 'truefalse', q, statement, isTrue: tfAnswer });
-
+    cards.push({ type: 'truefalse', q, statement, isTrue: tfAnswer, img: tfImgData });
     document.getElementById('tfQuestionInput').value = '';
     document.getElementById('tfStatementInput').value = '';
+    removeImg('tf');
     setTFAnswer(true);
     renderSidebar();
     currentQuizState = null;
@@ -886,8 +1116,7 @@
     mcList.innerHTML = '';
     tfList.innerHTML = '';
 
-    const allCards = cards;
-    if (!allCards.length) {
+    if (!cards.length) {
       flashcardSec.style.display = 'none';
       mcSec.style.display = 'none';
       tfSec.style.display = 'none';
@@ -896,13 +1125,13 @@
 
     let fcCount = 0, mcCount = 0, tfCount = 0;
     const fcIndices = [], mcIndices = [], tfIndices = [];
-    allCards.forEach((c, i) => {
+    cards.forEach((c, i) => {
       if (c.type === 'flashcard') fcIndices.push(i);
       else if (c.type === 'multiple') mcIndices.push(i);
       else if (c.type === 'truefalse') tfIndices.push(i);
     });
 
-    allCards.forEach((c, i) => {
+    cards.forEach((c, i) => {
       const item = document.createElement('div');
       item.className = 'card-item';
 
@@ -912,15 +1141,11 @@
         if (isActive) item.classList.add('active-card');
         item.innerHTML = `
           <div class="card-item-num">${String(++fcCount).padStart(2,'0')}</div>
-          <div class="card-item-text">
-            <div class="card-item-q">${escHtml(c.q)}</div>
-            <div class="card-item-a">${escHtml(c.a)}</div>
-          </div>
+          <div class="card-item-text"><div class="card-item-q">${escHtml(c.q)}</div></div>
           <button class="delete-btn" title="Delete">✕</button>`;
         item.querySelector('.delete-btn').addEventListener('click', e => { e.stopPropagation(); deleteCard(i); });
         item.addEventListener('click', () => jumpToCard('flashcard', localIdx));
         flashcardList.appendChild(item);
-
       } else if (c.type === 'multiple') {
         const localIdx = mcIndices.indexOf(i);
         const isActive = mode === 'multiple' && current === localIdx;
@@ -929,13 +1154,12 @@
           <div class="card-item-num" style="color:var(--accent2)">${String(++mcCount).padStart(2,'0')}</div>
           <div class="card-item-text">
             <div class="card-item-q">${escHtml(c.q)}</div>
-            <div class="card-item-a">✓ ${escHtml(c.correctAnswer)}</div>
+            ${c.img ? `<div class="card-item-a" style="margin-top:4px;">🖼 image attached</div>` : ''}
           </div>
           <button class="delete-btn" title="Delete">✕</button>`;
         item.querySelector('.delete-btn').addEventListener('click', e => { e.stopPropagation(); deleteCard(i); });
         item.addEventListener('click', () => jumpToCard('multiple', localIdx));
         mcList.appendChild(item);
-
       } else if (c.type === 'truefalse') {
         const localIdx = tfIndices.indexOf(i);
         const isActive = mode === 'truefalse' && current === localIdx;
@@ -944,7 +1168,7 @@
           <div class="card-item-num" style="color:#78b4ff">${String(++tfCount).padStart(2,'0')}</div>
           <div class="card-item-text">
             <div class="card-item-q">${escHtml(c.statement)}</div>
-            <div class="card-item-a">${c.isTrue ? '✓ True' : '✗ False'}</div>
+            ${c.img ? `<div class="card-item-a" style="margin-top:4px;">🖼 image attached</div>` : ''}
           </div>
           <button class="delete-btn" title="Delete">✕</button>`;
         item.querySelector('.delete-btn').addEventListener('click', e => { e.stopPropagation(); deleteCard(i); });
@@ -956,18 +1180,15 @@
     flashcardSec.style.display = fcCount > 0 ? 'block' : 'none';
     mcSec.style.display = mcCount > 0 ? 'block' : 'none';
     tfSec.style.display = tfCount > 0 ? 'block' : 'none';
-
     saveData();
   }
 
   // ── STUDY AREA ROUTER ──
   function renderStudy() {
     studyArea.innerHTML = '';
-
     const modeCards = getModeCards();
-
     if (modeCards.length === 0) {
-      const icons = { flashcard:'🃏', multiple:'☰', truefalse:'◎' };
+      const icons = { flashcard:'🃏', multiple:'📋', truefalse:'✅' };
       const hints = {
         flashcard: 'Set a topic and add flashcards on the left to begin.',
         multiple:  'Add multiple choice questions from the panel on the left.',
@@ -979,9 +1200,7 @@
       emptyState.style.display = 'flex';
       return;
     }
-
     if (current >= modeCards.length) current = 0;
-
     if (mode === 'flashcard') renderFlashcard(modeCards);
     else if (mode === 'multiple') renderMultiple(modeCards);
     else if (mode === 'truefalse') renderTrueFalse(modeCards);
@@ -991,14 +1210,10 @@
     return cards.filter(c => c.type === mode || (mode === 'flashcard' && c.type === 'flashcard'));
   }
 
-  // ── SHARED HEADER ──
   function buildHeader(subtitle, modeCards) {
-    const topic = topicInput.value.trim() || 'Untitled Deck';
-    const tagClass = mode === 'multiple' ? 'multiple' : mode === 'truefalse' ? 'truefalse' : '';
-    const fillClass = tagClass;
+    const fillClass = mode === 'multiple' ? 'multiple' : mode === 'truefalse' ? 'truefalse' : '';
     return `
       <div class="topic-display">
-        <div class="topic-tag ${tagClass}">📚 ${escHtml(topic)}</div>
         <h2>Study Session</h2>
         <p>${subtitle}</p>
       </div>
@@ -1051,20 +1266,18 @@
   // ── MULTIPLE CHOICE RENDER ──
   function renderMultiple(modeCards) {
     const card = modeCards[current];
-
     if (!currentQuizState || currentQuizState.cardIndex !== current) {
       const opts = shuffleArr([...card.opts]);
       currentQuizState = { cardIndex: current, opts, correctAnswer: card.correctAnswer };
     }
-
     const { opts, correctAnswer } = currentQuizState;
     const letters = ['A','B','C','D','E','F'];
-
     studyArea.innerHTML = buildHeader('Choose the correct answer', modeCards) + buildScore() + `
       <div class="mc-wrapper">
         <div class="mc-question">
           <div class="mc-q-label">Question</div>
           <div class="mc-q-text">${escHtml(card.q)}</div>
+          ${card.img ? `<img class="card-img" src="${card.img}" alt="question image">` : ''}
         </div>
         <div class="mc-options-display" id="mcOptionsDisplay"></div>
         <div id="quizFeedback"></div>
@@ -1099,18 +1312,16 @@
   // ── TRUE / FALSE RENDER ──
   function renderTrueFalse(modeCards) {
     const card = modeCards[current];
-
     if (!currentQuizState || currentQuizState.cardIndex !== current) {
       currentQuizState = { cardIndex: current, statement: card.statement, isTrue: card.isTrue };
     }
-
     const { statement, isTrue } = currentQuizState;
-
     studyArea.innerHTML = buildHeader('Is this statement True or False?', modeCards) + buildScore() + `
       <div class="tf-wrapper">
         <div class="tf-question">
           <div class="tf-meta">Q: ${escHtml(card.q)}</div>
           <div class="tf-statement">"${escHtml(statement)}"</div>
+          ${card.img ? `<img class="card-img" src="${card.img}" alt="question image">` : ''}
         </div>
         <div class="tf-options-display" id="tfOptionsDisplay"></div>
         <div id="quizFeedback"></div>
@@ -1118,7 +1329,6 @@
     ` + buildNav(modeCards);
 
     const container = document.getElementById('tfOptionsDisplay');
-
     const trueBtn = document.createElement('button');
     trueBtn.className = 'tf-btn true-btn';
     trueBtn.innerHTML = '✓<sub>True</sub>';
@@ -1159,11 +1369,9 @@
     const modeCards = getModeCards();
     const next = current + dir;
     if (next < 0 || next > modeCards.length - 1) return;
-
     if (dir === 1 && current === modeCards.length - 1 && mode !== 'flashcard' && answered) {
       showResults(modeCards); return;
     }
-
     current = next;
     answered = false;
     currentQuizState = null;
@@ -1187,7 +1395,7 @@
         </div>
         <div class="results-actions">
           <button class="btn btn-primary" onclick="restartQuiz()">↺ Try Again</button>
-          <button class="btn btn-ghost" onclick="switchMode('flashcard')">🃏 Review Cards</button>
+          <button class="btn btn-ghost" onclick="openAnswerKey()">📖 View Answer Key</button>
         </div>
       </div>
     `;
@@ -1238,27 +1446,6 @@
     saveData();
     showToast('Cards cleared.');
   }
-
-  // ── KEYBOARD ──
-  document.addEventListener('keydown', e => {
-    if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') return;
-    if (e.key === 'ArrowRight' || e.key === 'd') { navigate(1); e.preventDefault(); }
-    if (e.key === 'ArrowLeft'  || e.key === 'a') { navigate(-1); e.preventDefault(); }
-    if ((e.key === ' ' || e.key === 'Enter') && mode === 'flashcard') {
-      const fc = document.querySelector('.flashcard');
-      if (fc) fc.classList.toggle('flipped');
-      e.preventDefault();
-    }
-    if (mode === 'truefalse' && !answered) {
-      if (e.key === 't' || e.key === 'T') document.querySelector('.true-btn')?.click();
-      if (e.key === 'f' || e.key === 'F') document.querySelector('.false-btn')?.click();
-    }
-    if (mode === 'multiple' && !answered) {
-      const map = {'1':0,'2':1,'3':2,'4':3,'a':0,'b':1,'c':2,'d':3};
-      const idx = map[e.key.toLowerCase()];
-      if (idx !== undefined) document.querySelectorAll('.mc-option')[idx]?.click();
-    }
-  });
 
   questionInput.addEventListener('keydown', e => { if (e.key === 'Enter') answerInput.focus(); });
   answerInput.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); addCard(); } });
